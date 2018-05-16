@@ -10,7 +10,7 @@ require('codemirror/mode/htmlmixed/htmlmixed');
 const Title = styled.h1`
 	font-size: 1.5em;
 	text-align: center;
-	color: palevioletred;
+	color: turquoise;
 `;
 
 const Wrapper = styled.section`
@@ -27,7 +27,7 @@ const CodeOutput = styled.div`
 	width: 90%;
 	height: 300px;
 	color: black;
-	border: solid 2px palevioletred;
+	border: solid 2px turquoise;
 `;
 
 const MainList = styled.ul`
