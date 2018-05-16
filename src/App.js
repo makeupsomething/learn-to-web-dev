@@ -5,6 +5,7 @@ import './App.css';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
 require('codemirror/mode/htmlmixed/htmlmixed');
+require('codemirror/mode/css/css');
 
 
 const Title = styled.h1`
@@ -47,9 +48,27 @@ const ListItem = styled.li`
 	height: 100;
 `
 
+const TabButton = styled.button`
+	overflow: hidden;
+    border: 1px solid #ccc;
+	color: white;
+    background-color: turquoise;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+
+	${TabButton}:hover {
+    	background-color: darkturquoise;
+  	}
+`
+
 class App extends Component {
 	state = {
-		value: '<h1>Hello</h1>\n<p>Type something here!</p>'
+		value_html: '<h1>Hello</h1>\n<p>Type something here!</p>',
+		value_css: 'p {\n color: darkviolet;\n}',
+		editor: 'html',
 	};
 
   	handleChange = (event) => {
@@ -57,24 +76,34 @@ class App extends Component {
 	}
 	
 	createMarkup = () => {
-        return {__html: this.state.value};
-    }
+		let finalStyle = `${this.state.value_html}
+						<style>
+							${this.state.value_css}
+						</style>`
+        return {__html: finalStyle};
+	}
+	
+	setEditor = (editorType) => {
+		this.setState({editor: editorType});
+	}
 
   	render() {
     	return (
       		<Wrapper>
 				<Title>{`Welcome, let's learn web development!`}</Title>
+				<TabButton onClick={() => this.setEditor('html')}>HTML</TabButton>
+				<TabButton onClick={() => this.setEditor('css')}>CSS</TabButton>
 				<MainList>
 					<ListItem>
 					<CodeMirror
-						value={this.state.value}
+						value={this.state.editor === 'html' ? this.state.value_html : this.state.value_css}
 						options={{
-								mode: 'htmlmixed',
+								mode: this.state.editor === 'html' ? 'htmlmixed' : 'css',
 								theme: 'monokai',
-								lineNumbers: true
+								lineNumbers: true,
 							}}
 							onBeforeChange={(editor, data, value) => {
-								this.setState({value});
+								this.state.editor === 'html' ? this.setState({value_html: value}) : this.setState({value_css: value});
 							}}
 							onChange={(editor, data, value) => {}}
 						/>
