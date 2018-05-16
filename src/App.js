@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import {Controlled as CodeMirror} from 'react-codemirror2'
 import styled from 'styled-components';
 import './App.css';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/monokai.css';
+require('codemirror/mode/htmlmixed/htmlmixed');
+
 
 const Title = styled.h1`
 	font-size: 1.5em;
@@ -14,15 +19,6 @@ const Wrapper = styled.section`
 	padding-right: 1%;
 	height: 100%;
 	background: papayawhip;
-`;
-
-const CodeInput = styled.textarea`
-	margin: auto;
-	font-size: 1em;
-	width: 90%;
-	height: 300px;
-	background: black;
-	color: white;
 `;
 
 const CodeOutput = styled.div`
@@ -70,7 +66,18 @@ class App extends Component {
 				<Title>{`Welcome, let's learn web development!`}</Title>
 				<MainList>
 					<ListItem>
-						<CodeInput value={this.state.value} onChange={this.handleChange} />
+					<CodeMirror
+						value={this.state.value}
+						options={{
+								mode: 'htmlmixed',
+								theme: 'monokai',
+								lineNumbers: true
+							}}
+							onBeforeChange={(editor, data, value) => {
+								this.setState({value});
+							}}
+							onChange={(editor, data, value) => {}}
+						/>
 					</ListItem>
 					<ListItem>
 						<CodeOutput dangerouslySetInnerHTML={this.createMarkup()}></CodeOutput>
