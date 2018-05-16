@@ -48,11 +48,13 @@ const ListItem = styled.li`
 	height: 100;
 `
 
-const TabButton = styled.button`
+const TabButton = styled.button.attrs({
+	background: props => props.background || 'turquoise'
+})`
 	overflow: hidden;
     border: 1px solid #ccc;
 	color: white;
-    background-color: turquoise;
+    background: ${props => props.background};
     border: none;
     outline: none;
     cursor: pointer;
@@ -66,7 +68,7 @@ const TabButton = styled.button`
 
 class App extends Component {
 	state = {
-		value_html: '<h1>Hello</h1>\n<p>Type something here!</p>',
+		value_html: '<h1>Hello, this is a header</h1>\n<p>This is a paragraph, check out the CSS tab of your code editor and and try to change the color.</p>',
 		value_css: 'p {\n color: darkviolet;\n}',
 		editor: 'html',
 	};
@@ -91,8 +93,8 @@ class App extends Component {
     	return (
       		<Wrapper>
 				<Title>{`Welcome, let's learn web development!`}</Title>
-				<TabButton onClick={() => this.setEditor('html')}>HTML</TabButton>
-				<TabButton onClick={() => this.setEditor('css')}>CSS</TabButton>
+				<TabButton background={this.state.editor === 'html' ? 'darkturquoise' : ''} onClick={() => this.setEditor('html')}>HTML</TabButton>
+				<TabButton background={this.state.editor === 'css' ? 'darkturquoise' : ''} onClick={() => this.setEditor('css')}>CSS</TabButton>
 				<MainList>
 					<ListItem>
 					<CodeMirror
