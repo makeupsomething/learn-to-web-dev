@@ -79,7 +79,7 @@ class App extends Component {
 	
 	createMarkup = () => {
 		let finalStyle = `${this.state.value_html}
-						<style>
+						<style type="text/css">
 							${this.state.value_css}
 						</style>`
         return {__html: finalStyle};
